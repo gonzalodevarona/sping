@@ -1,5 +1,16 @@
 package com.gonza.taller.authentication;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.access.AccessDeniedHandler;
+import org.springframework.stereotype.Component;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.HashMap;
@@ -21,65 +32,27 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 import org.springframework.stereotype.Component;
 
 @Component
-public class LoggingAccessDeniedHandler implements AuthenticationSuccessHandler {
+public class LoggingAccessDeniedHandler implements AccessDeniedHandler {
 
+    private static Logger log = LoggerFactory.getLogger(LoggingAccessDeniedHandler.class);
 
-	
+    @Override
+    public void handle(HttpServletRequest request,
+                       HttpServletResponse response,
+                       AccessDeniedException ex) throws IOException, ServletException {
 
-	  protected Log logger = LogFactory.getLog(this.getClass());
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth != null) {
+            log.info(auth.getName()
+                    + " was trying to access protected resource: "
+                    + request.getRequestURI());
+        }
+        String query = "?url=" + request.getRequestURI();
+        if(request.getQueryString() != null) {
+        	query = query + "?" + request.getQueryString();
+        }
+        response.sendRedirect(request.getContextPath() + "/access-denied" + query);
 
-	  private RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
-
-	  @Override
-	  public void onAuthenticationSuccess(HttpServletRequest request, 
-	    HttpServletResponse response, Authentication authentication)
-	    throws IOException {
-
-	      handle(request, response, authentication);
-	      clearAuthenticationAttributes(request);
-	  }
-	  
-	  protected void handle(
-		        HttpServletRequest request,
-		        HttpServletResponse response, 
-		        Authentication authentication
-		) throws IOException {
-
-		    String targetUrl = determineTargetUrl(authentication);
-
-		    if (response.isCommitted()) {
-		        logger.debug(
-		                "Response has already been committed. Unable to redirect to "
-		                        + targetUrl);
-		        return;
-		    }
-
-		    redirectStrategy.sendRedirect(request, response, targetUrl);
-		}
-	  
-	  	protected String determineTargetUrl(final Authentication authentication) {
-
-		    Map<String, String> roleTargetUrlMap = new HashMap<>();
-		    roleTargetUrlMap.put("USER", "user/user.html");
-		    roleTargetUrlMap.put("ADMIN", "admin/admin.html");
-
-		    final Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
-		    for (final GrantedAuthority grantedAuthority : authorities) {
-		        String authorityName = grantedAuthority.getAuthority();
-		        if(roleTargetUrlMap.containsKey(authorityName)) {
-		            return roleTargetUrlMap.get(authorityName);
-		        }
-		    }
-
-		    throw new IllegalStateException();
-		}
-	  	
-	  	protected void clearAuthenticationAttributes(HttpServletRequest request) {
-	  	    HttpSession session = request.getSession(false);
-	  	    if (session == null) {
-	  	        return;
-	  	    }
-	  	    session.removeAttribute(WebAttributes.AUTHENTICATION_EXCEPTION);
-	  	}
-	}
+    }
+}
 

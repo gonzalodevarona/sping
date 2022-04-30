@@ -3,8 +3,10 @@ package com.gonza.taller.authentication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.annotation.web.configurers.ExceptionHandlingConfigurer;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import com.gonza.taller.model.auth.UserMine;
@@ -24,7 +26,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 		httpSecurity//.userDetailsService(myCustomUserDetailsService)
 		.formLogin()
-		.loginPage("/login").permitAll().successHandler(myAuthenticationSuccessHandler())
+		.loginPage("/login").permitAll()
 		.and().authorizeRequests()
 //		.antMatchers("/api/**")
 //		.permitAll()
@@ -36,7 +38,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		.httpBasic().and().logout().invalidateHttpSession(true)
 		.clearAuthentication(true)
 		.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-		.logoutSuccessUrl("/login?logout").permitAll().and().exceptionHandling()
+		.logoutSuccessUrl("/login?logout").permitAll().and().exceptionHandling((Customizer<ExceptionHandlingConfigurer<HttpSecurity>>) accessDeniedHandler)
 		;
 		
 		
