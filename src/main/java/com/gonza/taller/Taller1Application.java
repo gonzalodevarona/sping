@@ -20,12 +20,18 @@ import com.gonza.taller.model.prod.Location;
 import com.gonza.taller.model.prod.Product;
 import com.gonza.taller.model.prod.Productcategory;
 import com.gonza.taller.model.prod.Productcosthistory;
+import com.gonza.taller.model.prod.Productinventory;
 import com.gonza.taller.model.prod.Productsubcategory;
 import com.gonza.taller.repository.ProductCategoryRepository;
 import com.gonza.taller.repository.ProductSubCategoryRepository;
 import com.gonza.taller.repository.UserRepositoryI;
 import com.gonza.taller.service.LocationService;
+import com.gonza.taller.service.LocationServiceImp;
 import com.gonza.taller.service.ProductServiceImp;
+import com.gonza.taller.service.ProductcosthistoryService;
+import com.gonza.taller.service.ProductcosthistoryServiceImp;
+import com.gonza.taller.service.ProductinventoryService;
+import com.gonza.taller.service.ProductinventoryServiceImp;
 
 @SpringBootApplication
 @EntityScan(basePackages = {"com.gonza.taller.authentication","com.gonza.taller.model.*"})
@@ -46,7 +52,8 @@ public class Taller1Application {
 	@Bean
 	public CommandLineRunner dummy(UserRepositoryI userRepository, ProductServiceImp productService,
 			ProductCategoryRepository productcategoryRepository, ProductSubCategoryRepository productsubcategoryRepository,
-			LocationService locationService) {
+			LocationServiceImp locationService, ProductcosthistoryServiceImp productcosthistoryService,
+			ProductinventoryServiceImp productinventoryService) {
 		
 		return(args)->{
 
@@ -122,31 +129,21 @@ public class Taller1Application {
 			long timemd2 = datemd.getTime();
 			Timestamp md2 = new Timestamp(timemd);
 			pch.setEnddate(md2);
+			pch.setProduct(product);
+			productcosthistoryService.save(pch, 1);
+			
+			
+			Productinventory productinventory = new Productinventory();
+			productinventory.setLocation(location);
+			productinventory.setProduct(product);
+			productinventory.setQuantity(5);
+			productinventoryService.save(productinventory,1,1);
 			
 			
 			
 			
-//			Product p = productRepository.findById(1).get();
-//			
-//			productcosthistory.setStandardcost(new BigDecimal("3"));
-//			
-//			
-//			try {
-//				DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-//				Date date1 = (Date) df.parse("24/10/2021");
-//				
-//				long time1 = date1.getTime();
-//				
-//				Timestamp mofifiedDate = new Timestamp(time1);
-//				
-//				productcosthistory.setEnddate(mofifiedDate);
-//				
-//
-//			} catch (ParseException e) {
-//				e.printStackTrace();
-//			}
-//			
-//			
+
+			
 			
 			System.out.println("LOS GUARDO");
 			
