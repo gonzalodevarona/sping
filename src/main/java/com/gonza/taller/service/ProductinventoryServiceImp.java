@@ -18,7 +18,7 @@ public class ProductinventoryServiceImp implements ProductinventoryService {
 	
 	
 	
-	private ProductInventoryRepository productinventorRepository;
+	private ProductInventoryRepository productinventoryRepository;
 	private ProductRepository productRepository;
 	private LocationRepository locationRepository;
 	
@@ -28,7 +28,7 @@ public class ProductinventoryServiceImp implements ProductinventoryService {
 			ProductRepository productRepository,
 			LocationRepository locationRepository) {
 		
-		this.productinventorRepository = productinventorRepository;
+		this.productinventoryRepository = productinventoryRepository;
 		this.productRepository = productRepository;
 		this.locationRepository = locationRepository;
 	}
@@ -54,7 +54,7 @@ public class ProductinventoryServiceImp implements ProductinventoryService {
 			productInventory.setLocation(location.get());
 			productInventory.setProduct(product.get());
 			
-			productinventorRepository.save(productInventory);
+			productinventoryRepository.save(productInventory);
 		}
 	}
 	
@@ -80,7 +80,7 @@ public void edit(Productinventory productInventory, Integer productId, Integer l
 			productInventory.setLocation(location.get());
 			productInventory.setProduct(product.get());
 			
-			productinventorRepository.save(productInventory);
+			productinventoryRepository.save(productInventory);
 		}
 	}
 	
