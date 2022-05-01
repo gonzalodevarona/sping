@@ -17,10 +17,10 @@
 	<form class="container my-5" th:action="@{/login}" method="post" authentication-failure-url="/login?error=true" style="width: 30vw">
 		<h2 style="text-align: center">Inicia sesión con tus credeciales</h2>
 		<span th:if="${param.error}" class="text-danger">
-            Invalid credentials!
+            Credenciales invalidas.
         </span>
         <span th:if="${param.logout}" class="text-info">
-            You have been logged out
+            Has cerrado sesión exitosamente.
         </span>
 		<input type="text" id="username" name="username" class="form-control" placeholder="Nombre de usuario">
 		<br>
