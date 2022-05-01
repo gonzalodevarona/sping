@@ -12,6 +12,8 @@ import com.gonza.taller.repository.ProductCategoryRepository;
 import com.gonza.taller.repository.ProductRepository;
 import com.gonza.taller.repository.ProductSubCategoryRepository;
 
+
+
 @Service
 public class ProductServiceImp implements ProductService{
 	
@@ -127,6 +129,22 @@ public class ProductServiceImp implements ProductService{
 			productRepository.save(productEntity);	
 
 		}
+		
+	}
+	
+	@Override
+	public Iterable<Product> findAll() {
+		return productRepository.findAll();
+	}
+	
+	@Override
+	public Optional<Product> findById(int id){
+		return productRepository.findById(id);
+	}
+	
+	@Override
+	public void delete(Product product) {
+		productRepository.delete(product);
 		
 	}
 	

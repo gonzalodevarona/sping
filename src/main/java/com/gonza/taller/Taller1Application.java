@@ -70,6 +70,7 @@ public class Taller1Application {
 			product.setProductnumber("1010");
 			product.setWeight(1);
 			product.setSize(2);
+			product.setName("RTX 3090");
 			DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
 			Date date1 = (Date) df.parse("24/10/2021");
 			Date date2 = (Date) df.parse("24/11/2021");
@@ -85,6 +86,9 @@ public class Taller1Application {
 			
 			pc.setProductcategoryid(1);
 			psc.setProductsubcategoryid(1);
+			
+			pc.setName("Tarjetas Graficas");
+			psc.setName("Turing");
 			
 			product.setProductsubcategory(psc);
 			psc.setProductcategory(pc);

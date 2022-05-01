@@ -10,11 +10,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class AdminController implements AdminControllerI{
 
 	
+
 	@Override
 	@GetMapping
 	public String index() {
 		return "admin/index";
+		
 	}
+	
+	
 	
 	
 
