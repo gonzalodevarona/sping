@@ -2,6 +2,7 @@ package com.gonza.taller.service;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.Optional;
 
@@ -32,9 +33,9 @@ public class ProductcosthistoryServiceImp implements ProductcosthistoryService{
 		
 		Optional<Product> product = productRepository.findById(productId);
 		
-		Date date= new Date();
+		LocalDate today= LocalDate.now();
 		 
-		Timestamp today = new Timestamp(date.getTime());
+		
 		
 		if (productcosthistory == null) {
 			throw new RuntimeException();
@@ -42,7 +43,7 @@ public class ProductcosthistoryServiceImp implements ProductcosthistoryService{
 		} else if (product.isEmpty()) {
 			throw new RuntimeException();	
 		
-		} else if (today.before(productcosthistory.getEnddate())) {
+		} else if (today.isBefore(productcosthistory.getEnddate())) {
 			throw new IllegalArgumentException("Error: Product's cost history end date must not be greater than today's date.");
 		
 		} else if (productcosthistory.getStandardcost().compareTo(new BigDecimal("0")) == -1) {
@@ -63,9 +64,9 @@ public class ProductcosthistoryServiceImp implements ProductcosthistoryService{
 		
 		Optional<Product> product = productRepository.findById(productId);
 		
-		Date date= new Date();
+	
 		 
-		Timestamp today = new Timestamp(date.getTime());
+		LocalDate today = LocalDate.now();
 		
 		
 		if (productcosthistory == null) {
@@ -80,7 +81,7 @@ public class ProductcosthistoryServiceImp implements ProductcosthistoryService{
 			 } else if (product.isEmpty()) {
 				 throw new RuntimeException();	
 		
-			 } else if (today.before(productcosthistory.getEnddate())) {
+			 } else if (today.isBefore(productcosthistory.getEnddate())) {
 				 throw new IllegalArgumentException("Error: Product's cost history end date must not be greater than today's date.");
 		
 			 } else if (pch.get().getStandardcost().compareTo(new BigDecimal("0")) == -1) {

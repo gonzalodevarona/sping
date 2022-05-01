@@ -51,7 +51,7 @@ public class ProductServiceImp implements ProductService{
 		} else if (product.getProductnumber().isEmpty()) {
 			throw new IllegalArgumentException("Error: The product number argument must not be empty");
 		
-		} else if (product.getSellenddate().before(product.getSellstartdate())) {
+		} else if (product.getSellenddate().isBefore(product.getSellstartdate())) {
 			throw new IllegalArgumentException("Error: Product's sell end date must be greater than product's sell start date");
 		
 		} else if ( product.getWeight() <= 0){
@@ -89,7 +89,7 @@ public class ProductServiceImp implements ProductService{
 		} else if (product.getProductnumber().isEmpty()) {
 			throw new IllegalArgumentException("Error: The product number argument must not be empty");
 		
-		} else if (product.getSellenddate().before(product.getSellstartdate())) {
+		} else if (product.getSellenddate().isBefore(product.getSellstartdate())) {
 			throw new IllegalArgumentException("Error: Product's sell end date must be greater than product's sell start date");
 		
 		} else if ( product.getWeight() <= 0){

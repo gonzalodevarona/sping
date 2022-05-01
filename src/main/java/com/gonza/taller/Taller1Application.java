@@ -5,6 +5,7 @@ import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Date;
 
 import org.springframework.boot.CommandLineRunner;
@@ -71,15 +72,10 @@ public class Taller1Application {
 			product.setWeight(1);
 			product.setSize(2);
 			product.setName("RTX 3090");
-			DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-			Date date1 = (Date) df.parse("24/10/2021");
-			Date date2 = (Date) df.parse("24/11/2021");
-			long time1 = date1.getTime();
-			long time2 = date2.getTime();
-			Timestamp sellstart = new Timestamp(time1);
-			Timestamp sellend = new Timestamp(time2);
-			product.setSellstartdate(sellstart);
-			product.setSellenddate(sellend);
+			
+			
+			product.setSellstartdate(LocalDate.of(2021, 10, 24));
+			product.setSellenddate(LocalDate.of(2021, 11, 24));
 			
 			Productcategory pc = new Productcategory();
 			Productsubcategory psc = new Productsubcategory();
@@ -106,10 +102,8 @@ public class Taller1Application {
 			location.setCostrate(new BigDecimal("0.5"));
 			location.setLocationid(1);
 			location.setName("Ibiza");
-			Date datemd = (Date) df.parse("24/12/2021");
-			long timemd = datemd.getTime();
-			Timestamp md = new Timestamp(timemd);
-			location.setModifieddate(md);
+		
+			location.setModifieddate(LocalDate.of(2021, 12, 21));
 			
 			locationService.save(location);
 			
@@ -129,10 +123,8 @@ public class Taller1Application {
 			
 			Productcosthistory pch = new Productcosthistory(); 
 			pch.setStandardcost(new BigDecimal("3"));
-			Date datemd2 = (Date) df.parse("26/12/2021");
-			long timemd2 = datemd.getTime();
-			Timestamp md2 = new Timestamp(timemd);
-			pch.setEnddate(md2);
+			
+			pch.setEnddate(LocalDate.of(2021, 12, 21));
 			pch.setProduct(product);
 			productcosthistoryService.save(pch, 1);
 			

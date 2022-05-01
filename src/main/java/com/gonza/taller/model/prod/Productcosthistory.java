@@ -3,6 +3,7 @@ package com.gonza.taller.model.prod;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.time.LocalDate;
 
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
@@ -13,6 +14,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  * The persistent class for the productcosthistory database table.
@@ -28,10 +31,11 @@ public class Productcosthistory implements Serializable {
 	@SequenceGenerator(name = "PRODUCTCOSTHISTORY_PRODUCTCOSTHISTORYID_GENERATOR", allocationSize = 1, sequenceName = "PRODUCTCOSTHISTORY_SEQ")
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "PRODUCTCOSTHISTORY_PRODUCTCOSTHISTORYID_GENERATOR")
 	private Integer id;
-
-	private Timestamp enddate;
-
-	private Timestamp modifieddate;
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private LocalDate enddate;
+	
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private LocalDate modifieddate;
 
 	private BigDecimal standardcost;
 
@@ -43,7 +47,7 @@ public class Productcosthistory implements Serializable {
 	public Productcosthistory() {
 	}
 
-	public Timestamp getEnddate() {
+	public LocalDate getEnddate() {
 		return this.enddate;
 	}
 
@@ -51,7 +55,7 @@ public class Productcosthistory implements Serializable {
 		return this.id;
 	}
 
-	public Timestamp getModifieddate() {
+	public LocalDate getModifieddate() {
 		return this.modifieddate;
 	}
 
@@ -63,7 +67,7 @@ public class Productcosthistory implements Serializable {
 		return this.standardcost;
 	}
 
-	public void setEnddate(Timestamp enddate) {
+	public void setEnddate(LocalDate enddate) {
 		this.enddate = enddate;
 	}
 
@@ -71,7 +75,7 @@ public class Productcosthistory implements Serializable {
 		this.id = id;
 	}
 
-	public void setModifieddate(Timestamp modifieddate) {
+	public void setModifieddate(LocalDate modifieddate) {
 		this.modifieddate = modifieddate;
 	}
 

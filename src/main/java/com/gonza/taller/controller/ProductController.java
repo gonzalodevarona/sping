@@ -3,20 +3,37 @@ package com.gonza.taller.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import com.gonza.taller.model.prod.Product;
+import com.gonza.taller.service.ProductService;
 import com.gonza.taller.service.ProductServiceImp;
+import com.gonza.taller.service.ProductcategoryService;
+import com.gonza.taller.service.ProductcategoryServiceImp;
+import com.gonza.taller.service.ProductsubcategoryService;
+import com.gonza.taller.service.ProductsubcategoryServiceImp;
 
 @Controller
 @RequestMapping("product")
 public class ProductController implements ProductControllerI{
 	
-	private ProductServiceImp productService;
+	private ProductService productService;
+	private ProductcategoryService productcategoryService;
+	private ProductsubcategoryService productsubcategoryService;
 
 	@Autowired
-	public ProductController(ProductServiceImp productService) {
+	public ProductController(ProductService productService, ProductcategoryService productcategoryService,
+			ProductsubcategoryService productsubcategoryService) {
 
 		this.productService = productService;
+		this.productcategoryService = productcategoryService;
+		this.productsubcategoryService = productsubcategoryService;
 	}
 	
 	@Override
@@ -27,32 +44,34 @@ public class ProductController implements ProductControllerI{
 	}
 	
 
-//
-//	@GetMapping("/templatesProduct/add-product")
-//	public String listProduct(Model model) {
-//		model.addAttribute("product", new Product());
-//		model.addAttribute("subcategories", productService.findAllSubcategory());
-//		System.out.println("subcategorias agregadas");
-//
-//		return "templatesProduct/add-product";
-//	}
-//
-//	@PostMapping("/templatesProduct/add-product/")
-//	public String saveProduct(@Validated @ModelAttribute Product product, BindingResult bindingResult, Model model,
-//			@RequestParam(value = "action", required = true) String action) {
-//
-//		if (!action.equals("Cancel")) {
-//			model.addAttribute("subcategories", productService.findAllSubcategory());
-//			if (bindingResult.hasErrors()) {
-//				return "templatesProduct/add-product";
-//			} else if (product.getSellenddate().isBefore(product.getSellstartdate())) {
-//				model.addAttribute("dateError", true);
-//				return "templatesProduct/add-product";
-//			}
-//			productService.saveProduct(product, null, product.getProductsubcategory().getProductsubcategoryid());
-//		}
-//		return "redirect:/templatesProduct/";
-//	}
+
+	@GetMapping("/add")
+	public String addProduct(Model model) {
+		model.addAttribute("product", new Product());
+		model.addAttribute("subcategories", productsubcategoryService.findAll());
+		model.addAttribute("categories", productcategoryService.findAll());
+		System.out.println("subcategorias agregadas");
+
+		return "product/add";
+	}
+
+	@PostMapping("/add")
+	public String saveProduct(@Validated @ModelAttribute Product product, BindingResult bindingResult, Model model,
+			@RequestParam(value = "action", required = true) String action) {
+
+		if (!action.equals("Cancelar")) {
+			model.addAttribute("subcategories", productsubcategoryService.findAll());
+			model.addAttribute("categories", productcategoryService.findAll());
+			if (bindingResult.hasErrors()) {
+				return "product/add";
+			} else if (product.getSellenddate().isBefore(product.getSellstartdate())) {
+				model.addAttribute("dateError", true);
+				return "product/add";
+			}
+			productService.save(product, product.getProductsubcategory().getProductcategory().getProductcategoryid(), product.getProductsubcategory().getProductsubcategoryid());
+		}
+		return "redirect:/product/";
+	}
 
 } //end of class
 

@@ -3,6 +3,7 @@ package com.gonza.taller.model.prod;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -12,6 +13,8 @@ import javax.persistence.Id;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  * The persistent class for the location database table.
@@ -31,7 +34,7 @@ public class Location implements Serializable {
 
 	private BigDecimal costrate;
 
-	private Timestamp modifieddate;
+	private LocalDate modifieddate;
 
 	private String name;
 
@@ -71,8 +74,9 @@ public class Location implements Serializable {
 	public Integer getLocationid() {
 		return this.locationid;
 	}
-
-	public Timestamp getModifieddate() {
+	
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	public LocalDate getModifieddate() {
 		return this.modifieddate;
 	}
 
@@ -114,7 +118,7 @@ public class Location implements Serializable {
 		this.locationid = locationid;
 	}
 
-	public void setModifieddate(Timestamp modifieddate) {
+	public void setModifieddate(LocalDate modifieddate) {
 		this.modifieddate = modifieddate;
 	}
 
