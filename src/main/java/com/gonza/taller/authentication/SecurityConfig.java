@@ -11,16 +11,13 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import com.gonza.taller.model.auth.UserMine;
 
+@Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Autowired
 	private LoggingAccessDeniedHandler accessDeniedHandler;
 
-	@Bean
-	public LoggingAccessDeniedHandler myAuthenticationSuccessHandler(){
-	    return new LoggingAccessDeniedHandler();
-	}
-	
+
 	@Override
 	protected void configure(HttpSecurity httpSecurity) throws Exception {
 
@@ -38,8 +35,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		.httpBasic().and().logout().invalidateHttpSession(true)
 		.clearAuthentication(true)
 		.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-		.logoutSuccessUrl("/login?logout").permitAll().and().exceptionHandling((Customizer<ExceptionHandlingConfigurer<HttpSecurity>>) accessDeniedHandler)
-		;
+		.logoutSuccessUrl("/login?logout").permitAll().and().exceptionHandling()
+		.accessDeniedHandler(accessDeniedHandler);
+		
 		
 		
 	}

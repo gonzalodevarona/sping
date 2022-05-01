@@ -17,6 +17,8 @@
 		<java.version>17</java.version>
 	</properties>
 	<dependencies>
+
+	
 	
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -103,7 +105,6 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-rest</artifactId>
 		</dependency>
-
 	</dependencies>
 
 	<build>
