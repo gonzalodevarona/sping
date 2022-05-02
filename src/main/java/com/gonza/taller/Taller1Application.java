@@ -72,7 +72,7 @@ public class Taller1Application {
 			product.setWeight(1);
 			product.setSize(2);
 			product.setName("RTX 3090");
-			
+			product.setProductid(1);
 			
 			product.setSellstartdate(LocalDate.of(2021, 10, 24));
 			product.setSellenddate(LocalDate.of(2021, 11, 24));
@@ -121,19 +121,25 @@ public class Taller1Application {
 			user.setType(UserMine.USER);
 			userRepository.save(user);
 			
-			Productcosthistory pch = new Productcosthistory(); 
-			pch.setStandardcost(new BigDecimal("3"));
-			
-			pch.setEnddate(LocalDate.of(2021, 12, 21));
-			pch.setProduct(product);
-			productcosthistoryService.save(pch, 1);
-			
+//			Productcosthistory pch = new Productcosthistory(); 
+//			pch.setStandardcost(new BigDecimal("3"));
+//			
+			Product productProccessed = productService.findById(1).get();
+//			pch.setProduct(product);
+//			
+//			pch.setEnddate(LocalDate.of(2021, 12, 21));
+//			productcosthistoryService.save(pch, productProccessed.getProductid());
+//			
 			
 			Productinventory productinventory = new Productinventory();
-			productinventory.setLocation(location);
-			productinventory.setProduct(product);
+			Location locationProccessed = locationService.findById(1).get();
+			
+			productinventory.setLocation(locationProccessed);
+			
+			
+			productinventory.setProduct(productProccessed);
 			productinventory.setQuantity(5);
-			productinventoryService.save(productinventory,1,1);
+			productinventoryService.save(productinventory,productProccessed.getProductid(),locationProccessed.getLocationid());
 			
 			
 			

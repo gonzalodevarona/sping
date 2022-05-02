@@ -40,9 +40,9 @@ public class ProductcosthistoryServiceImp implements ProductcosthistoryService{
 		if (productcosthistory == null) {
 			throw new RuntimeException();
 			
-		} else if (product.isEmpty()) {
-			throw new RuntimeException();	
-		
+//		} else if (product.isEmpty()) {
+//			throw new RuntimeException();	
+//		
 		} else if (today.isBefore(productcosthistory.getEnddate())) {
 			throw new IllegalArgumentException("Error: Product's cost history end date must not be greater than today's date.");
 		
@@ -100,6 +100,23 @@ public class ProductcosthistoryServiceImp implements ProductcosthistoryService{
 			
 			 	}
 		}
+		
+	}
+	
+	
+	@Override
+	public Iterable<Productcosthistory> findAll() {
+		return productcosthistoryRepository.findAll();
+	}
+	
+	@Override
+	public Optional<Productcosthistory> findById(int id){
+		return productcosthistoryRepository.findById(id);
+	}
+	
+	@Override
+	public void delete(Productcosthistory location) {
+		productcosthistoryRepository.delete(location);
 		
 	}
 	
