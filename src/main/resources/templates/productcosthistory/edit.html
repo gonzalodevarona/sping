@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta http-equiv="x-ua-compatible" content="ie=edge">
-<title>Editar ubicación</title>
+<title>Editar Costo histórico de un productcosthistoryo</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
@@ -17,52 +17,56 @@
 </head>
 <body>
 	<div class="container my-5">
-		<h2 class="mb-5">Editar Ubicación</h2>
+		<h2 class="mb-5">Editar Costo Histórico de un Producto</h2>
 		<div class="row">
 			<div class="col-md-12">
 			
-				<form action="#" th:object="${location}" th:action="@{/location/edit/{id}(id=${location.locationid})}" method="post">
+				<form action="#" th:object="${productcosthistory}" th:action="@{/productcosthistory/edit/{id}(id=${productcosthistory.id})}" method="post">
 					<div class="row">
 						<div class="form-group col-md-12">
 							<div class="row">
 								<div class="form-group col-md-4">
-									<label for="locationid" class="col-form-label">Id</label>
+									<label for="id" class="col-form-label">Id</label>
 							
 									
-									<input type="text" th:field="*{locationid}"
-										class="form-control" id="locationid"
-										placeholder="locationid" disabled> <span
-										th:if="${#fields.hasErrors('locationid')}"
-										th:errors="*{locationid}" class="text-danger"></span>
+									<input type="text" th:field="*{id}"
+										class="form-control" id="id"
+										placeholder="id" disabled> <span
+										th:if="${#fields.hasErrors('id')}"
+										th:errors="*{id}" class="text-danger"></span>
 								</div>
 								
 								<div class="form-group col-md-4">
-									<label for="name" class="col-form-label">name</label>
-									<input type="text" th:field="*{name}"
-										class="form-control" id="name"
-										placeholder="name"> <span
-										th:if="${#fields.hasErrors('name')}"
-										th:errors="*{name}" class="text-danger"></span>
+									<label for="enddate" class="col-form-label">Fecha final de venta</label>
+									<input type="date" th:field="*{enddate}"
+										class="form-control" id="enddate"
+										placeholder="01/01/2000"> <span
+										th:if="${#fields.hasErrors('enddate')}"
+										th:errors="*{enddate}" class="text-danger"></span>
+							
+								</div>
+							
+								
+	
+								<div class="form-group col-md-4">
+									<label for="standardcost" class="col-form-label">Costo estándar</label> <input
+										type=number min=1 step=.01 th:field="*{standardcost}" class="form-control" id="standardcost"
+										placeholder="standardcost"> <span
+										th:if="${#fields.hasErrors('standardcost')}" th:errors="*{standardcost}"
+										class="text-danger"></span>
 								</div>
 								
-								<div class="form-group col-md-4">
-									<label for="availability" class="col-form-label">availability</label>
-									<input type="number" th:field="*{availability}"
-										class="form-control" id="availability"
-										placeholder="name"> <span
-										th:if="${#fields.hasErrors('availability')}"
-										th:errors="*{availability}" class="text-danger"></span>
+								<div class="form-group col-md-7">
+								<label for="product" class="col-form-label">Producto</label>
+								<select th:field="*{product}">
+									<option th:each="cat : ${products}"
+										th:value="${cat.productid}" class="form-control"
+										th:text="${cat.name}"
+										th:selected="${productcosthistory.product=cat}"></option>
+								</select> <span th:if="${#fields.hasErrors('product')}"
+									th:errors="*{product}" class="text-danger"></span>
 								</div>
-								
-								<div class="form-group col-md-4">
-									<label for="costrate" class="col-form-label">costrate</label>
-									<input type=number min=0 max=1 step=.01 th:field="*{costrate}"
-										class="form-control" id="costrate"
-										placeholder="name"> <span
-										th:if="${#fields.hasErrors('costrate')}"
-										th:errors="*{costrate}" class="text-danger"></span>
-								</div>
-							</div>
+							
 							
 
 

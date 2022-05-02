@@ -73,41 +73,41 @@ public class ProductcosthistoryController implements ProductcosthistoryControlle
 		}
 		return "redirect:/productcosthistory/";
 	}
-//	
-//	@Override
-//	@GetMapping("/edit/{id}")
-//	public String showEditProduct(@PathVariable("id") int id, Model model) {
-//		Optional<Product> product = productService.findById(id);
-//		if (product == null)
-//			throw new IllegalArgumentException("Invalid product Id:" + id);
-//		model.addAttribute("product", product.get());
-//
-//		model.addAttribute("subcategories", productsubcategoryService.findAll());
-//		
-//		return "product/edit";
-//	}
-//	
-//	@Override
-//	@PostMapping("/edit/{id}")
-//	public String editProduct(@PathVariable("id") int id, @RequestParam(value = "action", required = true) String action,
-//			Product product, BindingResult bindingResult, Model model) {
-//		if (!action.equals("Cancelar")) {
-//			
-//			if(bindingResult.hasErrors()) {
-//				model.addAttribute("product", product);
-//
-//				model.addAttribute("subcategories", productsubcategoryService.findAll());
-//				
-//				return "product/edit";
-//				
-//			}
-//			product.setProductid(id);
-//			productService.edit(product, product.getProductsubcategory().getProductsubcategoryid());
-//			
-//			model.addAttribute("products", productService.findAll());
-//		}
-//		return "redirect:/product/";
-//	}
+	
+	@Override
+	@GetMapping("/edit/{id}")
+	public String showEditProductcosthistory(@PathVariable("id") int id, Model model) {
+		Optional<Productcosthistory> productcosthistory = productcosthistoryService.findById(id);
+		if (productcosthistory == null)
+			throw new IllegalArgumentException("Invalid productcosthistory Id:" + id);
+		model.addAttribute("productcosthistory", productcosthistory.get());
+
+		model.addAttribute("products", productService.findAll());
+		
+		return "productcosthistory/edit";
+	}
+	
+	@Override
+	@PostMapping("/edit/{id}")
+	public String editProductcosthistory(@PathVariable("id") int id, @RequestParam(value = "action", required = true) String action,
+			Productcosthistory productcosthistory, BindingResult bindingResult, Model model) {
+		if (!action.equals("Cancelar")) {
+			
+			if(bindingResult.hasErrors()) {
+				model.addAttribute("productcosthistory", productcosthistory);
+
+				model.addAttribute("products", productService.findAll());
+				
+				return "product/edit";
+				
+			}
+			productcosthistory.setId(id);
+			productcosthistoryService.edit(productcosthistory, productcosthistory.getProduct().getProductid());
+			
+			model.addAttribute("productcosthistories", productcosthistoryService.findAll());
+		}
+		return "redirect:/productcosthistory/";
+	}
 
 } //end of class
 
