@@ -1,5 +1,7 @@
 package com.gonza.taller.controller;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -7,17 +9,16 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.gonza.taller.model.prod.Product;
 import com.gonza.taller.service.ProductService;
-import com.gonza.taller.service.ProductServiceImp;
 import com.gonza.taller.service.ProductcategoryService;
-import com.gonza.taller.service.ProductcategoryServiceImp;
 import com.gonza.taller.service.ProductsubcategoryService;
-import com.gonza.taller.service.ProductsubcategoryServiceImp;
+
 
 @Controller
 @RequestMapping("product")
@@ -69,6 +70,41 @@ public class ProductController implements ProductControllerI{
 				return "product/add";
 			}
 			productService.save(product, product.getProductsubcategory().getProductcategory().getProductcategoryid(), product.getProductsubcategory().getProductsubcategoryid());
+		}
+		return "redirect:/product/";
+	}
+	
+	@GetMapping("/edit/{id}")
+	public String showEditProduct(@PathVariable("id") int id, Model model) {
+		Optional<Product> product = productService.findById(id);
+		if (product == null)
+			throw new IllegalArgumentException("Invalid appointment Id:" + id);
+		model.addAttribute("product", product.get());
+
+		model.addAttribute("subcategories", productsubcategoryService.findAll());
+		
+		return "product/edit";
+	}
+	
+	
+	@PostMapping("/edit/{id}")
+	public String editProduct(@PathVariable("id") int id, @RequestParam(value = "action", required = true) String action,
+			Product product, BindingResult bindingResult, Model model) {
+		if (!action.equals("Cancelar")) {
+			
+			if(bindingResult.hasErrors()) {
+				model.addAttribute("product", product);
+
+				model.addAttribute("subcategories", productsubcategoryService.findAll());
+				
+				return "product/edit";
+				
+			}
+			
+			productService.edit(product, product.getProductsubcategory().getProductcategory().getProductcategoryid(),
+					product.getProductsubcategory().getProductsubcategoryid());
+			
+			model.addAttribute("products", productService.findAll());
 		}
 		return "redirect:/product/";
 	}

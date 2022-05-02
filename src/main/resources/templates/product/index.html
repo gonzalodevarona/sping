@@ -48,7 +48,7 @@
 								<td class="text-info" th:text="${product.weight}"></td>
 								<td class="text-info" th:text="${product.productsubcategory.productcategory.name}"></td>
 								<td class="text-info" th:text="${product.productsubcategory.name}"></td>
-								<td><a th:href="@{/products/edit/{id}(id=${product.productid})}"
+								<td><a th:href="@{/product/edit/{id}(id=${product.productid})}"
 									class="btn btn-primary"><i class="fas fa-user-edit ml-2"></i></a></td>
 							</tr>
 						</tbody>
