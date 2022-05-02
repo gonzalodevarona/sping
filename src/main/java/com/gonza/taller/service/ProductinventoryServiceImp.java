@@ -33,6 +33,7 @@ public class ProductinventoryServiceImp implements ProductinventoryService {
 		this.locationRepository = locationRepository;
 	}
 	
+	@Override
 	public void save(Productinventory productInventory, Integer productId, Integer locationId) {
 		
 		Optional<Product> product = productRepository.findById(productId);
@@ -58,8 +59,8 @@ public class ProductinventoryServiceImp implements ProductinventoryService {
 		}
 	}
 	
-	
-public void edit(Productinventory productInventory, Integer productId, Integer locationId) {
+	@Override	
+	public void edit(Productinventory productInventory, Integer productId, Integer locationId) {
 		
 		Optional<Product> product = productRepository.findById(productId);
 		Optional<Location> location = locationRepository.findById(locationId);
@@ -82,6 +83,22 @@ public void edit(Productinventory productInventory, Integer productId, Integer l
 			
 			productinventoryRepository.save(productInventory);
 		}
+	}
+
+	@Override
+	public Iterable<Productinventory> findAll() {
+		return productinventoryRepository.findAll();
+	}
+	
+	@Override
+	public Optional<Productinventory> findById(int id){
+		return productinventoryRepository.findById(id);
+	}
+	
+	@Override
+	public void delete(Productinventory productinventory) {
+		productinventoryRepository.delete(productinventory);
+		
 	}
 	
 	

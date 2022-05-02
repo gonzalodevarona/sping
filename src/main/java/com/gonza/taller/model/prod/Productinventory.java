@@ -12,6 +12,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 
 /**
  * The persistent class for the productinventory database table.
@@ -31,7 +33,9 @@ public class Productinventory implements Serializable {
 	private Integer bin;
 
 	private Timestamp modifieddate;
-
+	
+	@NotNull
+	@Min(1)
 	private Integer quantity;
 
 	private Integer rowguid;
@@ -40,12 +44,12 @@ public class Productinventory implements Serializable {
 
 	// bi-directional many-to-one association to Location
 	@ManyToOne
-	@JoinColumn(name = "locationid", insertable = false, updatable = false)
+	@JoinColumn(name = "locationid")
 	private Location location;
 
 	// bi-directional many-to-one association to Product
 	@ManyToOne
-	@JoinColumn(name = "productid", insertable = false, updatable = false)
+	@JoinColumn(name = "productid")
 	private Product product;
 
 	public Productinventory() {

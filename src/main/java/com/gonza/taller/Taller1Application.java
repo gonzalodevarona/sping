@@ -77,21 +77,38 @@ public class Taller1Application {
 			product.setSellstartdate(LocalDate.of(2021, 10, 24));
 			product.setSellenddate(LocalDate.of(2021, 11, 24));
 			
-			Productcategory pc = new Productcategory();
-			Productsubcategory psc = new Productsubcategory();
+			Productcategory pc1 = new Productcategory();
+			Productsubcategory psc1 = new Productsubcategory();
 			
-			pc.setProductcategoryid(1);
-			psc.setProductsubcategoryid(1);
+//			pc.setProductcategoryid(1);
+//			psc.setProductsubcategoryid(1);
 			
-			pc.setName("Tarjetas Graficas");
-			psc.setName("Turing");
+			pc1.setName("Vehiculos");
+			psc1.setName("Fuera de borda");
 			
-			product.setProductsubcategory(psc);
-			psc.setProductcategory(pc);
+			product.setProductsubcategory(psc1);
+			psc1.setProductcategory(pc1);
 			
 			
-			productcategoryRepository.save(pc);
-			productsubcategoryRepository.save(psc);
+			Productcategory pc2 = new Productcategory();
+			Productsubcategory psc2 = new Productsubcategory();
+			
+//			pc.setProductcategoryid(1);
+//			psc.setProductsubcategoryid(1);
+			
+			pc2.setName("Tarjetas Graficas");
+			psc2.setName("Turing");
+			
+			product.setProductsubcategory(psc2);
+			psc2.setProductcategory(pc2);
+			
+			
+			productcategoryRepository.save(pc2);
+			productsubcategoryRepository.save(psc2);
+			
+			
+			productcategoryRepository.save(pc1);
+			productsubcategoryRepository.save(psc1);
 			productService.save(product,1,1);
 			
 			
@@ -121,15 +138,15 @@ public class Taller1Application {
 			user.setType(UserMine.USER);
 			userRepository.save(user);
 			
-//			Productcosthistory pch = new Productcosthistory(); 
-//			pch.setStandardcost(new BigDecimal("3"));
-//			
+			Productcosthistory pch = new Productcosthistory(); 
+			pch.setStandardcost(new BigDecimal("3"));
+			
 			Product productProccessed = productService.findById(1).get();
-//			pch.setProduct(product);
-//			
-//			pch.setEnddate(LocalDate.of(2021, 12, 21));
-//			productcosthistoryService.save(pch, productProccessed.getProductid());
-//			
+			pch.setProduct(product);
+			
+			pch.setEnddate(LocalDate.of(2021, 12, 21));
+			productcosthistoryService.save(pch, productProccessed.getProductid());
+			
 			
 			Productinventory productinventory = new Productinventory();
 			Location locationProccessed = locationService.findById(1).get();

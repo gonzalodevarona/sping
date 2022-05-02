@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta http-equiv="x-ua-compatible" content="ie=edge">
-<title>Costos históricos productos</title>
+<title>Inventarios de Productos</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
@@ -16,38 +16,40 @@
 <link rel="stylesheet" href="../css/shards.min.css">
 </head>
 <body>
-	<div th:switch="${productcosthistories}" class="container my-5">
+	<div th:switch="${productinventories}" class="container my-5">
 		<div class="row">
 			<div class="col-md-10">
-				<h2 th:case="null">Aún no hay costos históricos de productos :c</h2>
+				<h2 th:case="null">Aún no hay Inventarios de productos :c</h2>
 				<div th:case="*">
-					<h2 class="my-5">Costos históricos de productos</h2>
+					<h2 class="my-5">Inventarios de Productos</h2>
 					<table class="table table-striped table-responsive-md">
 						<thead>
 							<tr>
 								<th>ID</th>
-								<th>Fecha de Fin</th>
-								<th>Costo Estándar</th>
+								<th>Cantidad</th>
 								<th>ID Producto</th>
 								<th>Nombre Producto</th>
+								<th>ID Ubicación</th>
+								<th>Nombre Ubicación</th>
 								<th>Edit</th>
 							</tr>
 						</thead>
 						<tbody>
-							<tr th:each="productcosthistory : ${productcosthistories}">
-								<td class="text-info" th:text="${productcosthistory.id}"></td>
-								<td class="text-info" th:text="${productcosthistory.enddate}"></td>
-								<td class="text-info" th:text="${productcosthistory.standardcost}"></td>
-								<td class="text-info" th:text="${productcosthistory.product.productid}"></td>
-								<td class="text-info" th:text="${productcosthistory.product.name}"></td>
-								<td><a th:href="@{/productcosthistory/edit/{id}(id=${productcosthistory.id})}"
+							<tr th:each="productinventory : ${productinventories}">
+								<td class="text-info" th:text="${productinventory.id}"></td>
+								<td class="text-info" th:text="${productinventory.quantity}"></td>
+								<td class="text-info" th:text="${productinventory.product.productid}"></td>
+								<td class="text-info" th:text="${productinventory.product.name}"></td>
+								<td class="text-info" th:text="${productinventory.location.locationid}"></td>
+								<td class="text-info" th:text="${productinventory.location.name}"></td>
+								<td><a th:href="@{/productinventory/edit/{id}(id=${productinventory.id})}"
 									class="btn btn-primary"><i class="fas fa-user-edit ml-2"></i></a></td>
 							</tr>
 						</tbody>
 					</table>
 				</div>
 				<p class="my-5">
-					<a href="/productcosthistory/add/" class="btn btn-primary"><i
+					<a href="/productinventory/add/" class="btn btn-primary"><i
 						class="fas fa-user-plus ml-2"></i></a>
 				</p>
 			</div>

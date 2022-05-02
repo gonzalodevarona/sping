@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta http-equiv="x-ua-compatible" content="ie=edge">
-<title>Agregar Costo histórico del producto</title>
+<title>Agregar Inventario de Producto</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
@@ -17,59 +17,56 @@
 </head>
 <body>
 	<div class="container my-5">
-		<h2 class="mb-5">Nuevo Costo Histórico del Producto</h2>
+		<h2 class="mb-5">Nuevo Inventario de Producto</h2>
 		<div class="row">
 			<div class="col-md-12">
-				<form action="#" th:action="@{/productcosthistory/add/}"
-					th:object="${productcosthistory}" method="post">
+				<form action="#" th:action="@{/productinventory/add/}"
+					th:object="${productinventory}" method="post">
 					<div class="row">
 						<div class="form-group col-md-12">
 
 							<div class="row">
-								
+								<div class="form-group col-md-4">
+									<label for="quantity" class="col-form-label">Cantidad</label>
+									<input type="number" th:field="*{quantity}"
+										class="form-control" id="quantity"
+										placeholder="quantity"> <span
+										th:if="${#fields.hasErrors('quantity')}"
+										th:errors="*{quantity}" class="text-danger"></span>
+								</div>
 
-								
-								<div class="form-group col-md-4">
-									<label for="enddate" class="col-form-label">Fecha final de venta</label>
-									<input type="date" th:field="*{enddate}"
-										class="form-control" id="enddate"
-										placeholder="01/01/2000"> <span
-										th:if="${#fields.hasErrors('enddate')}"
-										th:errors="*{enddate}" class="text-danger"></span>
-							
-								</div>
-							
-								
-	
-								<div class="form-group col-md-4">
-									<label for="standardcost" class="col-form-label">Costo estándar</label> <input
-										type=number min=1 step=.01 th:field="*{standardcost}" class="form-control" id="standardcost"
-										placeholder="standardcost"> <span
-										th:if="${#fields.hasErrors('standardcost')}" th:errors="*{standardcost}"
-										class="text-danger"></span>
-								</div>
-								
-								<div class="form-group col-md-7">
+
+
+
+							<div class="form-group col-md-7">
 									<label for="product" class="col-form-label">Producto</label>
 									<select th:field="*{product}">
 										<option th:each="cat : ${products}"
 											th:value="${cat.productid}" class="form-control"
 											th:text="${cat.name}"
-											th:selected="${productcosthistory.product=cat}"></option>
+											th:selected="${productinventory.product=cat}"></option>
 									</select> <span th:if="${#fields.hasErrors('product')}"
 										th:errors="*{product}" class="text-danger"></span>
-								</div>
-
 							</div>
-
-
-
-
+							
+							<div class="form-group col-md-7">
+								<label for="location" class="col-form-label">Ubicación</label>
+								<select th:field="*{location}">
+									<option th:each="cat : ${locations}"
+										th:value="${cat.locationid}" class="form-control"
+										th:text="${cat.name}"
+										th:selected="${productinventory.location=cat}"></option>
+								</select> <span th:if="${#fields.hasErrors('location')}"
+									th:errors="*{location}" class="text-danger"></span>
+							</div>
+							
 							
 							
 							
 							</select> <span th:if="${dateError}" class="text-danger">La fecha
-								final no puede estar después de la fecha actual</span>
+								final no puede estar antes de la fecha inicial</span>
+								
+						</div>
 
 
 
@@ -78,7 +75,7 @@
 					<div class="row">
 						<div class="col-md-5 mt-3">
 							<input type="submit" name="action" class="btn btn-primary"
-								value="Agregar costo histórico del producto">
+								value="Agregar inventario de producto">
 						</div>
 						<div class="col-md-3 mt-3">
 							<input type="reset" class="btn btn-secondary" value="Limpiar">
