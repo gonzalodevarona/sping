@@ -100,9 +100,8 @@ public class ProductController implements ProductControllerI{
 				return "product/edit";
 				
 			}
-			
-			productService.edit(product, product.getProductsubcategory().getProductcategory().getProductcategoryid(),
-					product.getProductsubcategory().getProductsubcategoryid());
+			product.setProductid(id);
+			productService.edit(product, product.getProductsubcategory().getProductsubcategoryid());
 			
 			model.addAttribute("products", productService.findAll());
 		}

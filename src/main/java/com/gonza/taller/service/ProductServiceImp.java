@@ -127,6 +127,65 @@ public class ProductServiceImp implements ProductService{
 			productEntity.setSellenddate(product.getSellenddate());
 			
 			productRepository.save(productEntity);	
+			
+
+		}
+		
+	}
+	@Override
+	public void edit(Product product, Integer prSCategoryId) {
+		
+		
+		Optional<Productsubcategory> productsubcategory = productSubCategoryRepository.findById(prSCategoryId);
+		
+		if (product == null) {
+			throw new RuntimeException();
+		
+		} else if (productsubcategory.isEmpty()) {
+			throw new RuntimeException();
+			
+		} else if (product.getProductnumber().isEmpty()) {
+			throw new IllegalArgumentException("Error: The product number argument must not be empty");
+		
+		} else if (product.getSellenddate().isBefore(product.getSellstartdate())) {
+			throw new IllegalArgumentException("Error: Product's sell end date must be greater than product's sell start date");
+		
+		} else if ( product.getWeight() <= 0){
+			throw new IllegalArgumentException("Error: Product's weight must be greater than 0");
+		
+		} else if ( product.getSize() <= 0){
+			throw new IllegalArgumentException("Error: Product's size must be greater than 0");
+		
+		}  else {
+			
+			Optional<Product> p = productRepository.findById(product.getProductid());
+			Product productEntity = p.get();
+			
+			productEntity.setProductsubcategory(productsubcategory.get());
+			
+			
+			productEntity.setName(product.getName());
+			productEntity.setColor(product.getColor());
+			productEntity.setDaystomanufacture(product.getDaystomanufacture());
+			productEntity.setDiscontinueddate(product.getDiscontinueddate());
+			productEntity.setFinishedgoodsflag(product.getFinishedgoodsflag());
+			productEntity.setListprice(product.getListprice());
+			productEntity.setMakeflag(product.getMakeflag());
+			productEntity.setModifieddate(product.getModifieddate());
+			productEntity.setModifieddate(product.getModifieddate());
+			productEntity.setProductline(product.getProductline());;	
+			productEntity.setProductnumber(product.getProductnumber());
+			productEntity.setReorderpoint(product.getReorderpoint());
+			productEntity.setRowguid(product.getRowguid());
+			productEntity.setRowguid(product.getRowguid());
+			productEntity.setSize(product.getSize());
+			productEntity.setWeight(product.getWeight());
+			
+			productEntity.setSellstartdate(product.getSellstartdate());
+			productEntity.setSellenddate(product.getSellenddate());
+			
+			productRepository.save(productEntity);	
+			
 
 		}
 		
