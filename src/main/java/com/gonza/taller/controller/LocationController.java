@@ -1,5 +1,7 @@
 package com.gonza.taller.controller;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -7,6 +9,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -56,41 +59,39 @@ public class LocationController implements LocationControllerI{
 		}
 		return "redirect:/location/";
 	}
-//	
-//	@Override
-//	@GetMapping("/edit/{id}")
-//	public String showEditProduct(@PathVariable("id") int id, Model model) {
-//		Optional<Product> product = productService.findById(id);
-//		if (product == null)
-//			throw new IllegalArgumentException("Invalid appointment Id:" + id);
-//		model.addAttribute("product", product.get());
-//
-//		model.addAttribute("subcategories", productsubcategoryService.findAll());
-//		
-//		return "product/edit";
-//	}
-//	
-//	@Override
-//	@PostMapping("/edit/{id}")
-//	public String editProduct(@PathVariable("id") int id, @RequestParam(value = "action", required = true) String action,
-//			Product product, BindingResult bindingResult, Model model) {
-//		if (!action.equals("Cancelar")) {
-//			
-//			if(bindingResult.hasErrors()) {
-//				model.addAttribute("product", product);
-//
-//				model.addAttribute("subcategories", productsubcategoryService.findAll());
-//				
-//				return "product/edit";
-//				
-//			}
-//			product.setProductid(id);
-//			productService.edit(product, product.getProductsubcategory().getProductsubcategoryid());
-//			
-//			model.addAttribute("products", productService.findAll());
-//		}
-//		return "redirect:/product/";
-//	}
+	
+	@Override
+	@GetMapping("/edit/{id}")
+	public String showEditLocation(@PathVariable("id") int id, Model model) {
+		Optional<Location> location = locationService.findById(id);
+		if (location == null)
+			throw new IllegalArgumentException("Invalid location Id:" + id);
+		model.addAttribute("location", location.get());
+
+		return "location/edit";
+	}
+	
+	@Override
+	@PostMapping("/edit/{id}")
+	public String editLocation(@PathVariable("id") int id, @RequestParam(value = "action", required = true) String action,
+			Location location, BindingResult bindingResult, Model model) {
+		if (!action.equals("Cancelar")) {
+			
+			if(bindingResult.hasErrors()) {
+				model.addAttribute("location", location);
+
+				
+				
+				return "location/edit";
+				
+			}
+			location.setLocationid(id);
+			locationService.edit(location);
+			
+			model.addAttribute("locations", locationService.findAll());
+		}
+		return "redirect:/location/";
+	}
 	
 
 

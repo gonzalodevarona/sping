@@ -46,7 +46,7 @@
 								
 								<div class="form-group col-md-4">
 									<label for="costrate" class="col-form-label">Tarifa</label> <input
-										type="number" th:field="*{costrate}" class="form-control" id="costrate"
+										type=number min=0 max=1 step=.01 th:field="*{costrate}" class="form-control" id="costrate"
 										placeholder="costrate"> <span
 										th:if="${#fields.hasErrors('costrate')}" th:errors="*{costrate}"
 										class="text-danger"></span>

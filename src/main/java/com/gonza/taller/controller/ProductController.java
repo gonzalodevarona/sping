@@ -80,7 +80,7 @@ public class ProductController implements ProductControllerI{
 	public String showEditProduct(@PathVariable("id") int id, Model model) {
 		Optional<Product> product = productService.findById(id);
 		if (product == null)
-			throw new IllegalArgumentException("Invalid appointment Id:" + id);
+			throw new IllegalArgumentException("Invalid product Id:" + id);
 		model.addAttribute("product", product.get());
 
 		model.addAttribute("subcategories", productsubcategoryService.findAll());

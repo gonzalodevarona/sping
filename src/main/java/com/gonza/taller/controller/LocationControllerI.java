@@ -10,6 +10,6 @@ public interface LocationControllerI {
 	public String index(Model model);
 	public String addLocation(Model model);
 	public String saveLocation(Location location, BindingResult bindingResult, Model model, String action);
-//	public String showEditLocation(int id, Model model);
-//	public String editLocation(int id, String action, Product product, BindingResult bindingResult, Model model); 
+	public String showEditLocation(int id, Model model);
+	public String editLocation(int id, String action, Location location, BindingResult bindingResult, Model model); 
 }
