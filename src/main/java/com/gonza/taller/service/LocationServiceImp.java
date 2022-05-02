@@ -97,6 +97,23 @@ public class LocationServiceImp implements LocationService{
 		}
 		
 	}
+	
+	
+	@Override
+	public Iterable<Location> findAll() {
+		return locationRepository.findAll();
+	}
+	
+	@Override
+	public Optional<Location> findById(int id){
+		return locationRepository.findById(id);
+	}
+	
+	@Override
+	public void delete(Location location) {
+		locationRepository.delete(location);
+		
+	}
 
 	
 	

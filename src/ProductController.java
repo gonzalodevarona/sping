@@ -45,7 +45,7 @@ public class ProductController implements ProductControllerI{
 	}
 	
 
-	@Override
+
 	@GetMapping("/add")
 	public String addProduct(Model model) {
 		model.addAttribute("product", new Product());
@@ -55,8 +55,7 @@ public class ProductController implements ProductControllerI{
 
 		return "product/add";
 	}
-	
-	@Override
+
 	@PostMapping("/add")
 	public String saveProduct(@Validated @ModelAttribute Product product, BindingResult bindingResult, Model model,
 			@RequestParam(value = "action", required = true) String action) {
@@ -75,7 +74,6 @@ public class ProductController implements ProductControllerI{
 		return "redirect:/product/";
 	}
 	
-	@Override
 	@GetMapping("/edit/{id}")
 	public String showEditProduct(@PathVariable("id") int id, Model model) {
 		Optional<Product> product = productService.findById(id);
@@ -88,7 +86,7 @@ public class ProductController implements ProductControllerI{
 		return "product/edit";
 	}
 	
-	@Override
+	
 	@PostMapping("/edit/{id}")
 	public String editProduct(@PathVariable("id") int id, @RequestParam(value = "action", required = true) String action,
 			Product product, BindingResult bindingResult, Model model) {

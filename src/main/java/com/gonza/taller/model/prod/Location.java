@@ -13,6 +13,13 @@ import javax.persistence.Id;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
+import javax.validation.constraints.DecimalMax;
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -29,13 +36,21 @@ public class Location implements Serializable {
 	@SequenceGenerator(name = "LOCATION_LOCATIONID_GENERATOR", allocationSize = 1, sequenceName = "LOCATION_SEQ")
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "LOCATION_LOCATIONID_GENERATOR")
 	private Integer locationid;
-
+	
+	@NotNull
+	@DecimalMin(value = "1.0")
+	@DecimalMax(value = "10.0")
 	private BigDecimal availability;
-
+	
+	@NotNull
+	@DecimalMin(value = "0.0")
+	@DecimalMax(value = "1.0")
 	private BigDecimal costrate;
 
 	private LocalDate modifieddate;
-
+	
+	@NotBlank
+	@Size(min = 5)
 	private String name;
 
 	// bi-directional many-to-one association to Productinventory
