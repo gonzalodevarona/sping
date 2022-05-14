@@ -5,13 +5,15 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 import com.gonza.taller.model.prod.Product;
+import com.gonza.taller.dao.LocationDAO;
+import com.gonza.taller.dao.ProductDAO;
 import com.gonza.taller.model.prod.Location;
 import com.gonza.taller.model.prod.Productcategory;
 import com.gonza.taller.model.prod.Productinventory;
 import com.gonza.taller.model.prod.Productsubcategory;
-import com.gonza.taller.repository.LocationRepository;
+
 import com.gonza.taller.repository.ProductInventoryRepository;
-import com.gonza.taller.repository.ProductRepository;
+
 
 @Service
 public class ProductinventoryServiceImp implements ProductinventoryService {
@@ -19,25 +21,25 @@ public class ProductinventoryServiceImp implements ProductinventoryService {
 	
 	
 	private ProductInventoryRepository productinventoryRepository;
-	private ProductRepository productRepository;
-	private LocationRepository locationRepository;
+	private ProductDAO productDAO;
+	private LocationDAO locationDAO;
 	
 	
 	
 	public ProductinventoryServiceImp(ProductInventoryRepository productinventoryRepository,
-			ProductRepository productRepository,
-			LocationRepository locationRepository) {
+			ProductDAO productDAO,
+			LocationDAO locationDAO) {
 		
 		this.productinventoryRepository = productinventoryRepository;
-		this.productRepository = productRepository;
-		this.locationRepository = locationRepository;
+		this.productDAO = productDAO;
+		this.locationDAO = locationDAO;
 	}
 	
 	@Override
 	public void save(Productinventory productInventory, Integer productId, Integer locationId) {
 		
-		Optional<Product> product = productRepository.findById(productId);
-		Optional<Location> location = locationRepository.findById(locationId);
+		Optional<Product> product = productDAO.findById(productId);
+		Optional<Location> location = locationDAO.findById(locationId);
 		
 		
 		if (productInventory == null) {
@@ -62,8 +64,8 @@ public class ProductinventoryServiceImp implements ProductinventoryService {
 	@Override	
 	public void edit(Productinventory productInventory, Integer productId, Integer locationId) {
 		
-		Optional<Product> product = productRepository.findById(productId);
-		Optional<Location> location = locationRepository.findById(locationId);
+		Optional<Product> product = productDAO.findById(productId);
+		Optional<Location> location = locationDAO.findById(locationId);
 		
 		
 		if (productInventory == null) {

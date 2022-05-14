@@ -8,30 +8,32 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
+import com.gonza.taller.dao.ProductDAO;
+import com.gonza.taller.dao.ProductcosthistoryDAO;
 import com.gonza.taller.model.prod.Location;
 import com.gonza.taller.model.prod.Product;
 import com.gonza.taller.model.prod.Productcategory;
 import com.gonza.taller.model.prod.Productcosthistory;
 import com.gonza.taller.repository.ProductCostHistoryRepository;
-import com.gonza.taller.repository.ProductRepository;
+
 
 @Service
 public class ProductcosthistoryServiceImp implements ProductcosthistoryService{
 	
-	private ProductCostHistoryRepository productcosthistoryRepository;
-	private ProductRepository productRepository;
+	private ProductcosthistoryDAO productcosthistoryDAO;
+	private ProductDAO productDAO;
 	
-	public ProductcosthistoryServiceImp(ProductCostHistoryRepository productcosthistoryRepository,
-			ProductRepository productRepository){
+	public ProductcosthistoryServiceImp(ProductcosthistoryDAO productcosthistoryDAO,
+			ProductDAO productDAO){
 		
-		this.productcosthistoryRepository = productcosthistoryRepository;
-		this.productRepository = productRepository;
+		this.productcosthistoryDAO = productcosthistoryDAO;
+		this.productDAO = productDAO;
 	}
 
 	@Override
 	public void save(Productcosthistory productcosthistory, Integer productId) {
 		
-		Optional<Product> product = productRepository.findById(productId);
+		Optional<Product> product = productDAO.findById(productId);
 		
 		LocalDate today= LocalDate.now();
 		 
@@ -53,7 +55,7 @@ public class ProductcosthistoryServiceImp implements ProductcosthistoryService{
 		
 			productcosthistory.setProduct(product.get());
 			
-			productcosthistoryRepository.save(productcosthistory);
+			productcosthistoryDAO.save(productcosthistory);
 		
 		}
 		
@@ -62,7 +64,7 @@ public class ProductcosthistoryServiceImp implements ProductcosthistoryService{
 	@Override
 	public void edit(Productcosthistory productcosthistory, Integer productId) {
 		
-		Optional<Product> product = productRepository.findById(productId);
+		Optional<Product> product = productDAO.findById(productId);
 		
 	
 		 
@@ -73,7 +75,7 @@ public class ProductcosthistoryServiceImp implements ProductcosthistoryService{
 			throw new RuntimeException();
 			
 		} else {
-			Optional<Productcosthistory> pch = productcosthistoryRepository.findById(productcosthistory.getId());
+			Optional<Productcosthistory> pch = productcosthistoryDAO.findById(productcosthistory.getId());
 			
 			 if (pch.isEmpty()) {
 				 throw new RuntimeException();	
@@ -96,7 +98,7 @@ public class ProductcosthistoryServiceImp implements ProductcosthistoryService{
 				 productcosthistoryEntity.setStandardcost(productcosthistory.getStandardcost());
 				 productcosthistoryEntity.setProduct(product.get());
 				
-				 productcosthistoryRepository.save(productcosthistoryEntity);
+				 productcosthistoryDAO.save(productcosthistoryEntity);
 			
 			 	}
 		}
@@ -106,17 +108,17 @@ public class ProductcosthistoryServiceImp implements ProductcosthistoryService{
 	
 	@Override
 	public Iterable<Productcosthistory> findAll() {
-		return productcosthistoryRepository.findAll();
+		return productcosthistoryDAO.findAll();
 	}
 	
 	@Override
 	public Optional<Productcosthistory> findById(int id){
-		return productcosthistoryRepository.findById(id);
+		return productcosthistoryDAO.findById(id);
 	}
 	
 	@Override
 	public void delete(Productcosthistory location) {
-		productcosthistoryRepository.delete(location);
+		productcosthistoryDAO.delete(location);
 		
 	}
 	

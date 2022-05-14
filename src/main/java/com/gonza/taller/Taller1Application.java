@@ -8,6 +8,8 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Date;
 
+import javax.transaction.Transactional;
+
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -36,7 +38,7 @@ import com.gonza.taller.service.ProductinventoryServiceImp;
 
 @SpringBootApplication
 @EntityScan(basePackages = {"com.gonza.taller.authentication","com.gonza.taller.model.*"})
-@ComponentScan(basePackages = {"com.gonza.taller.authentication","com.gonza.taller.repository","com.gonza.taller.service","com.gonza.taller.controller"})
+@ComponentScan(basePackages = {"com.gonza.taller.authentication","com.gonza.taller.service","com.gonza.taller.dao","com.gonza.taller.repository","com.gonza.taller.controller"})
 public class Taller1Application {
 	
 	
@@ -51,11 +53,11 @@ public class Taller1Application {
 	}
 	
 	@Bean
+	@Transactional
 	public CommandLineRunner dummy(UserRepositoryI userRepository, ProductServiceImp productService,
 			ProductCategoryRepository productcategoryRepository, ProductSubCategoryRepository productsubcategoryRepository,
 			LocationServiceImp locationService, ProductcosthistoryServiceImp productcosthistoryService,
 			ProductinventoryServiceImp productinventoryService) {
-		
 		return(args)->{
 
 			//ADMIN

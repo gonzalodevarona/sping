@@ -3,13 +3,16 @@ package com.gonza.taller.service;
 import java.math.BigDecimal;
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import com.gonza.taller.dao.ProductDAO;
 import com.gonza.taller.model.prod.Product;
 import com.gonza.taller.model.prod.Productcategory;
 import com.gonza.taller.model.prod.Productsubcategory;
 import com.gonza.taller.repository.ProductCategoryRepository;
-import com.gonza.taller.repository.ProductRepository;
+import com.gonza.taller.dao.ProductDAO;
 import com.gonza.taller.repository.ProductSubCategoryRepository;
 
 
@@ -17,24 +20,26 @@ import com.gonza.taller.repository.ProductSubCategoryRepository;
 @Service
 public class ProductServiceImp implements ProductService{
 	
-	private ProductRepository productRepository;
+	private ProductDAO productDAO;
 	
 	private ProductCategoryRepository productCategoryRepository;
 	
 	private ProductSubCategoryRepository productSubCategoryRepository;
 	
 	
-	public ProductServiceImp(ProductRepository productRepository,
+
+	public ProductServiceImp(ProductDAO ProductDAO,
 			ProductCategoryRepository productCategoryRepository,
 			ProductSubCategoryRepository productSubCategoryRepository){
 		
-		this.productRepository = productRepository;
+		this.productDAO = ProductDAO;
 		this.productCategoryRepository = productCategoryRepository;
 		this.productSubCategoryRepository = productSubCategoryRepository;
 		
 	}
 	
 	@Override
+	@Transactional
 	public void save(Product product, Integer prCategoryId, Integer prSCategoryId) {
 		
 		Optional<Productcategory> productcategory = productCategoryRepository.findById(prCategoryId);
@@ -63,11 +68,11 @@ public class ProductServiceImp implements ProductService{
 		}  else {
 			
 			
-			productsubcategory.get().setProductcategory(productcategory.get());
+			//productsubcategory.get().setProductcategory(productcategory.get());
 			product.setProductsubcategory(productsubcategory.get());
 			
 			
-			productRepository.save(product);
+			productDAO.save(product);
 		
 		}
 	}
@@ -100,7 +105,7 @@ public class ProductServiceImp implements ProductService{
 		
 		}  else {
 			
-			Optional<Product> p = productRepository.findById(product.getProductid());
+			Optional<Product> p = productDAO.findById(product.getProductid());
 			Product productEntity = p.get();
 			
 			productEntity.setProductsubcategory(productsubcategory.get());
@@ -126,7 +131,7 @@ public class ProductServiceImp implements ProductService{
 			productEntity.setSellstartdate(product.getSellstartdate());
 			productEntity.setSellenddate(product.getSellenddate());
 			
-			productRepository.save(productEntity);	
+			productDAO.save(productEntity);	
 			
 
 		}
@@ -158,7 +163,7 @@ public class ProductServiceImp implements ProductService{
 		
 		}  else {
 			
-			Optional<Product> p = productRepository.findById(product.getProductid());
+			Optional<Product> p = productDAO.findById(product.getProductid());
 			Product productEntity = p.get();
 			
 			productEntity.setProductsubcategory(productsubcategory.get());
@@ -184,7 +189,7 @@ public class ProductServiceImp implements ProductService{
 			productEntity.setSellstartdate(product.getSellstartdate());
 			productEntity.setSellenddate(product.getSellenddate());
 			
-			productRepository.save(productEntity);	
+			productDAO.save(productEntity);	
 			
 
 		}
@@ -193,17 +198,19 @@ public class ProductServiceImp implements ProductService{
 	
 	@Override
 	public Iterable<Product> findAll() {
-		return productRepository.findAll();
+		return productDAO.findAll();
 	}
+	
+
 	
 	@Override
 	public Optional<Product> findById(int id){
-		return productRepository.findById(id);
+		return productDAO.findById(id);
 	}
 	
 	@Override
 	public void delete(Product product) {
-		productRepository.delete(product);
+		productDAO.delete(product);
 		
 	}
 	

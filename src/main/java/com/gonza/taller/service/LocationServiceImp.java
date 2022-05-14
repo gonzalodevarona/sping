@@ -5,23 +5,23 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
+import com.gonza.taller.dao.LocationDAO;
 import com.gonza.taller.model.prod.Location;
 import com.gonza.taller.model.prod.Product;
 import com.gonza.taller.model.prod.Productcategory;
 import com.gonza.taller.model.prod.Productsubcategory;
-import com.gonza.taller.repository.LocationRepository;
+
 import com.gonza.taller.repository.ProductCategoryRepository;
-import com.gonza.taller.repository.ProductRepository;
 import com.gonza.taller.repository.ProductSubCategoryRepository;
 
 @Service
 public class LocationServiceImp implements LocationService{
 	
-	private LocationRepository locationRepository;
+	private com.gonza.taller.dao.LocationDAO locationDAO;
 	
-	public LocationServiceImp(LocationRepository locationRepository){
+	public LocationServiceImp(LocationDAO locationDAO){
 		
-		this.locationRepository = locationRepository;
+		this.locationDAO = locationDAO;
 		
 		
 	}
@@ -51,7 +51,7 @@ public class LocationServiceImp implements LocationService{
 			
 			
 			
-			locationRepository.save(location);
+			locationDAO.save(location);
 		
 		}
 	}
@@ -63,7 +63,7 @@ public class LocationServiceImp implements LocationService{
 		if (location == null) {
 			throw new RuntimeException();
 		} else {
-			Optional<Location> l = locationRepository.findById(location.getLocationid());
+			Optional<Location> l = locationDAO.findById(location.getLocationid());
 			
 			if (location == null) {
 				throw new RuntimeException();
@@ -91,7 +91,7 @@ public class LocationServiceImp implements LocationService{
 				locationEntity.setProductinventories(location.getProductinventories());
 				locationEntity.setWorkorderroutings(location.getWorkorderroutings());
 
-				locationRepository.save(locationEntity);
+				locationDAO.save(locationEntity);
 
 			}
 		}
@@ -101,17 +101,17 @@ public class LocationServiceImp implements LocationService{
 	
 	@Override
 	public Iterable<Location> findAll() {
-		return locationRepository.findAll();
+		return locationDAO.findAll();
 	}
 	
 	@Override
 	public Optional<Location> findById(int id){
-		return locationRepository.findById(id);
+		return locationDAO.findById(id);
 	}
 	
 	@Override
 	public void delete(Location location) {
-		locationRepository.delete(location);
+		locationDAO.delete(location);
 		
 	}
 
