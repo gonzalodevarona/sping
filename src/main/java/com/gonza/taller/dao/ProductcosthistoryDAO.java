@@ -10,6 +10,7 @@ import javax.persistence.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.gonza.taller.model.prod.Location;
 import com.gonza.taller.model.prod.Product;
 import com.gonza.taller.model.prod.Productcosthistory;
 
@@ -17,26 +18,30 @@ import com.gonza.taller.model.prod.Productcosthistory;
 
 @Repository
 
-public class ProductcosthistoryDAO {
+public class ProductcosthistoryDAO implements Dao<Productcosthistory>{
 	
 	@PersistenceContext
 	private EntityManager entityManager;
 		
+	@Override
 	@Transactional
 	public void save(Productcosthistory productcosthistory) {
 		entityManager.merge(productcosthistory);
 	}
 	
+	@Override
 	public Optional<Productcosthistory> findById(int id){
 		
 		return Optional.ofNullable(entityManager.find(Productcosthistory.class, id));
 		
 	}
 	
+	@Override
 	public void delete(Productcosthistory productcosthistory) {
 		entityManager.remove(productcosthistory);
 	}
 	
+	@Override
 	public List<Productcosthistory> findAll() {
 		Query query = entityManager.createQuery("SELECT a FROM Productcosthistory a");
 		return query.getResultList();
@@ -52,6 +57,12 @@ public class ProductcosthistoryDAO {
 		Query query = entityManager.createQuery("SELECT a FROM Product a WHERE a.standardcost = :cost");
 		query.setParameter("cost", cost);
 		return query.getResultList();
+	}
+
+	@Override
+	public void update(Productcosthistory productcosthistory) {
+		entityManager.merge(productcosthistory);
+		
 	}
 	
 }

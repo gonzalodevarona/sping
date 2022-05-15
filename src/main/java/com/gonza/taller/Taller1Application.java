@@ -24,17 +24,24 @@ import com.gonza.taller.model.prod.Product;
 import com.gonza.taller.model.prod.Productcategory;
 import com.gonza.taller.model.prod.Productcosthistory;
 import com.gonza.taller.model.prod.Productinventory;
+import com.gonza.taller.model.prod.Productmodel;
 import com.gonza.taller.model.prod.Productsubcategory;
+import com.gonza.taller.model.prod.Unitmeasure;
 import com.gonza.taller.repository.ProductCategoryRepository;
 import com.gonza.taller.repository.ProductSubCategoryRepository;
 import com.gonza.taller.repository.UserRepositoryI;
 import com.gonza.taller.service.LocationService;
 import com.gonza.taller.service.LocationServiceImp;
 import com.gonza.taller.service.ProductServiceImp;
+import com.gonza.taller.service.ProductcategoryServiceImp;
 import com.gonza.taller.service.ProductcosthistoryService;
 import com.gonza.taller.service.ProductcosthistoryServiceImp;
 import com.gonza.taller.service.ProductinventoryService;
 import com.gonza.taller.service.ProductinventoryServiceImp;
+import com.gonza.taller.service.ProductmodelService;
+import com.gonza.taller.service.ProductmodelServiceImp;
+import com.gonza.taller.service.ProductsubcategoryServiceImp;
+import com.gonza.taller.service.UnitmeasureServiceImp;
 
 @SpringBootApplication
 @EntityScan(basePackages = {"com.gonza.taller.authentication","com.gonza.taller.model.*"})
@@ -55,9 +62,10 @@ public class Taller1Application {
 	@Bean
 	@Transactional
 	public CommandLineRunner dummy(UserRepositoryI userRepository, ProductServiceImp productService,
-			ProductCategoryRepository productcategoryRepository, ProductSubCategoryRepository productsubcategoryRepository,
 			LocationServiceImp locationService, ProductcosthistoryServiceImp productcosthistoryService,
-			ProductinventoryServiceImp productinventoryService) {
+			ProductinventoryServiceImp productinventoryService,
+			ProductcategoryServiceImp productcategoryService, ProductsubcategoryServiceImp productsubcategoryService,
+			ProductmodelServiceImp productmodelService, UnitmeasureServiceImp unitmeasureService) {
 		return(args)->{
 
 			//ADMIN
@@ -104,13 +112,39 @@ public class Taller1Application {
 			product.setProductsubcategory(psc2);
 			psc2.setProductcategory(pc2);
 			
+			Productmodel  productmodel1 = new Productmodel();
+			Productmodel  productmodel2 = new Productmodel();
 			
-			productcategoryRepository.save(pc2);
-			productsubcategoryRepository.save(psc2);
+			productmodel1.setCatalogdescription("Motor para largos trayectos");
+			productmodel1.setInstructions("Cuidar muy bien");
+			productmodel1.setName("Serie 3");
+			
+			productmodel2.setCatalogdescription("Tarjeta grafica para jugar o minar");
+			productmodel2.setInstructions("No usar para minar aunque da mucho dinero");
+			productmodel2.setName("Serie 3000");
+			
+			product.setProductmodel(productmodel2);
+			
+			productmodelService.save(productmodel1);
+			productmodelService.save(productmodel2);
 			
 			
-			productcategoryRepository.save(pc1);
-			productsubcategoryRepository.save(psc1);
+			Unitmeasure unitmeasure = new Unitmeasure();
+			
+			unitmeasure.setName("unidad");
+			unitmeasure.setUnitmeasurecode(1);
+			
+			unitmeasureService.save(unitmeasure);
+			
+			product.setUnitmeasure1(unitmeasure);
+			
+			
+			productcategoryService.save(pc2);
+			productsubcategoryService.save(psc2);
+			
+			
+			productcategoryService.save(pc1);
+			productsubcategoryService.save(psc1);
 			productService.save(product,1,1);
 			
 			

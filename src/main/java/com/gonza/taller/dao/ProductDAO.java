@@ -12,32 +12,38 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.gonza.taller.model.prod.Product;
 import com.gonza.taller.model.prod.Productcategory;
+import com.gonza.taller.model.prod.Productcosthistory;
+import com.gonza.taller.model.prod.Productinventory;
 import com.gonza.taller.model.prod.Productsubcategory;
 
 
 
 @Repository
 
-public class ProductDAO {
+public class ProductDAO implements Dao<Product>{
 	
 	@PersistenceContext
 	private EntityManager entityManager;
 		
 	@Transactional
+	@Override
 	public void save(Product product) {
 		entityManager.merge(product);
 	}
 	
+	@Override
 	public Optional<Product> findById(int id){
 		
 		return Optional.ofNullable(entityManager.find(Product.class, id));
 		
 	}
 	
+	@Override
 	public void delete(Product product) {
 		entityManager.remove(product);
 	}
 	
+	@Override
 	public List<Product> findAll() {
 		Query query = entityManager.createQuery("SELECT a FROM Product a");
 		return query.getResultList();
@@ -60,6 +66,17 @@ public class ProductDAO {
 		query.setParameter("code", code);
 		return query.getResultList();
 	}
+
+	@Override
+	public void update(Product product) {
+		entityManager.merge(product);
+		
+	}
 	
+//	public List<Product> findMoreThan2Productcosthistory() {
+//		Query query = entityManager.createQuery("SELECT a FROM Product a WHERE a.productmodel.productmodelid = :id");
+//		return query.getResultList();
+//	}
+//	
 	
 } //end of class
