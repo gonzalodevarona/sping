@@ -34,6 +34,7 @@ public class LocationDAO implements Dao<Location>{
 	}
 	
 	@Override
+	@Transactional
 	public void delete(Location location) {
 		entityManager.remove(location);
 	}
@@ -45,6 +46,7 @@ public class LocationDAO implements Dao<Location>{
 	}
 
 	@Override
+	@Transactional
 	public void update(Location location) {
 		entityManager.merge(location);
 		

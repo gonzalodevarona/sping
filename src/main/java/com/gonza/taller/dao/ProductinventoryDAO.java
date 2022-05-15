@@ -36,6 +36,7 @@ public class ProductinventoryDAO implements Dao<Productinventory>{
 	}
 	
 	@Override
+	@Transactional
 	public void delete(Productinventory productinventory) {
 		entityManager.remove(productinventory);
 	}
@@ -59,6 +60,7 @@ public class ProductinventoryDAO implements Dao<Productinventory>{
 	}
 
 	@Override
+	@Transactional
 	public void update(Productinventory productinventory) {
 		entityManager.merge(productinventory);
 		

@@ -37,6 +37,7 @@ public class ProductcosthistoryDAO implements Dao<Productcosthistory>{
 	}
 	
 	@Override
+	@Transactional
 	public void delete(Productcosthistory productcosthistory) {
 		entityManager.remove(productcosthistory);
 	}
@@ -60,6 +61,7 @@ public class ProductcosthistoryDAO implements Dao<Productcosthistory>{
 	}
 
 	@Override
+	@Transactional
 	public void update(Productcosthistory productcosthistory) {
 		entityManager.merge(productcosthistory);
 		
