@@ -18,7 +18,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.thymeleaf.extras.java8time.dialect.Java8TimeDialect;
 
-import com.gonza.taller.model.auth.UserMine;
+import com.gonza.taller.model.auth.Usermine;
 import com.gonza.taller.model.prod.Location;
 import com.gonza.taller.model.prod.Product;
 import com.gonza.taller.model.prod.Productcategory;
@@ -70,11 +70,11 @@ public class Taller1Application {
 
 			//ADMIN
 			
-			UserMine admin = new UserMine();
+			Usermine admin = new Usermine();
 			admin.setUserId(1);
 			admin.setUsername("admin");
 			admin.setPassword("{noop}admin");
-			admin.setType(UserMine.ADMIN);
+			admin.setType(Usermine.ADMIN);
 			userRepository.save(admin);
 			
 			Product product = new Product();
@@ -167,11 +167,11 @@ public class Taller1Application {
 			
 			//USER
 			
-			UserMine user = new UserMine();
+			Usermine user = new Usermine();
 			user.setUserId(2);
 			user.setUsername("user");
 			user.setPassword("{noop}user");
-			user.setType(UserMine.USER);
+			user.setType(Usermine.USER);
 			userRepository.save(user);
 			
 			Productcosthistory pch = new Productcosthistory(); 

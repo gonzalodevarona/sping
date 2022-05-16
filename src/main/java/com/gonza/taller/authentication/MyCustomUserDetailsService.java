@@ -7,7 +7,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.gonza.taller.model.auth.UserMine;
+import com.gonza.taller.model.auth.Usermine;
 import com.gonza.taller.repository.UserRepositoryI;
 
 
@@ -29,7 +29,7 @@ public class MyCustomUserDetailsService implements UserDetailsService {
 		
 		System.out.println("Username: "+username);
 		
-		UserMine userApp = ur.findByUsername(username);
+		Usermine userApp = ur.findByUsername(username);
 		
 		
 		if (userApp != null) {

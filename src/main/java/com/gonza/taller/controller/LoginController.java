@@ -6,7 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import com.gonza.taller.model.auth.UserMine;
+import com.gonza.taller.model.auth.Usermine;
 
 @Controller
 public class LoginController implements LoginControllerI {
@@ -14,7 +14,7 @@ public class LoginController implements LoginControllerI {
 	@Override
 	@GetMapping("/login")
 	public String customLogin(Model model) {
-		model.addAttribute("user", new UserMine());
+		model.addAttribute("user", new Usermine());
 		return "custom-login";
 	}
 	

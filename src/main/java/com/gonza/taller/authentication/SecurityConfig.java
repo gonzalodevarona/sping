@@ -9,7 +9,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.annotation.web.configurers.ExceptionHandlingConfigurer;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
-import com.gonza.taller.model.auth.UserMine;
+import com.gonza.taller.model.auth.Usermine;
 
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
@@ -28,9 +28,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //		.antMatchers("/api/**")
 //		.permitAll()
 		.antMatchers("/admin/**", "/product/**", "/location/**")
-		.hasRole(UserMine.ADMIN)
+		.hasRole(Usermine.ADMIN)
 		.antMatchers("/user/**", "/pch/**", "/pi/**")
-		.hasRole(UserMine.USER)
+		.hasRole(Usermine.USER)
 		.anyRequest().authenticated().and()
 		.httpBasic().and().logout().invalidateHttpSession(true)
 		.clearAuthentication(true)

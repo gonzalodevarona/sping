@@ -39,6 +39,7 @@ public class ProductDAO implements Dao<Product>{
 	}
 	
 	@Override
+	@Transactional
 	public void delete(Product product) {
 		entityManager.remove(product);
 	}
@@ -65,18 +66,44 @@ public class ProductDAO implements Dao<Product>{
 		Query query = entityManager.createQuery("SELECT a FROM Product a WHERE a.unitmeasure1.unitmeasurecode = :code");
 		query.setParameter("code", code);
 		return query.getResultList();
+		
+		
 	}
 
 	@Override
+	@Transactional
 	public void update(Product product) {
 		entityManager.merge(product);
 		
 	}
 	
-//	public List<Product> findMoreThan2Productcosthistory() {
-//		Query query = entityManager.createQuery("SELECT a FROM Product a WHERE a.productmodel.productmodelid = :id");
-//		return query.getResultList();
-//	}
+	public List<Product> findMoreThan2Productcosthistory() {
+		Query query = entityManager.createNativeQuery("SELECT Product.productnumber, Product.name Product.productid COUNT(Productcosthistory.id) AS NumberOfProductCostHistory\n"
+				+ "FROM (Productcosthistory\n"
+				+ "INNER JOIN Product ON Productcosthistory.id = Product.productcosthistories.id)\n"
+				+ "GROUP BY Product.name\n"
+				+ "WHERE COUNT(Productcosthistory.id) > 1;");
+		return query.getResultList();
+	}
+	
+//	Query query = entityManager.createQuery("SELECT a.productnumber, a.name , a.productid, COUNT(a.productid) AS NumberOfProductCostHistory "
+//			+ "FROM (Productcosthistory "
+//			+ "INNER JOIN Product a ON Productcosthistory.product.productid = a.productid) "
+//			+ "GROUP BY a.name "
+//			+ "WHERE COUNT(a.productid) > 1;");
 //	
+//	
+	
+//	public List<Product> findByProductSumInventory_orderByLocation(Productsubcategory subcategory) {
+//		String jpql = "SELECT pro" + " FROM producto pro " + "WHERE pro.productinventories  "
+//				+ "IN ( SELECT productinventory pir" + " FROM pro.productinventories  "
+//				+ "WHERE  pir.product.productsubcategory = :subcategory" + "AND pir.quantity>= 1"
+//				+ " ORDER BY pir.location";
+//		
+//		return entityManagerProduct.createQuery(jpql).getResultList();
+//
+//	}
+	
+	
 	
 } //end of class

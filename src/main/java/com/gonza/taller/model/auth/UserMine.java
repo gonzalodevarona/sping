@@ -18,10 +18,10 @@ import lombok.NoArgsConstructor;
 
 @Entity
 @NamedQuery(name = "UserMine.findAll", query = "SELECT a FROM UserMine a")
-public class UserMine implements Serializable{
+public class Usermine implements Serializable{
 	
+	private static final long serialVersionUID = 1L;
 	
-
 	public final static String ADMIN = "ADMIN";
 	public final static String USER = "USER";
 	
@@ -35,11 +35,11 @@ public class UserMine implements Serializable{
 	private String type;
 	
 
-	public UserMine() {
+	public Usermine() {
 		
 	}
 			
-	public UserMine(long userId, String username, String password, String type) {
+	public Usermine(long userId, String username, String password, String type) {
 		this.userId = userId;
 		this.username = username;
 		this.password = password;
