@@ -17,7 +17,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@NamedQuery(name = "UserMine.findAll", query = "SELECT a FROM UserMine a")
+@NamedQuery(name = "Usermine.findAll", query = "SELECT a FROM Usermine a")
 public class Usermine implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
@@ -26,8 +26,8 @@ public class Usermine implements Serializable{
 	public final static String USER = "USER";
 	
 	@Id
-	@SequenceGenerator(name="USERR_USERID_GENERATOR", sequenceName="USERR_SEQ")
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="USERR_USERID_GENERATOR")
+	@SequenceGenerator(name="USERMINE_USERID_GENERATOR", sequenceName="USERMINE_SEQ")
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="USERMINE_USERID_GENERATOR")
 	@Column(name="USER_ID")
 	private long userId;
 	private String username;

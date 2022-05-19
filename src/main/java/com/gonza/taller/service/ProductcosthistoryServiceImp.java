@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.gonza.taller.dao.ProductDAO;
 import com.gonza.taller.dao.ProductcosthistoryDAO;
@@ -31,6 +32,7 @@ public class ProductcosthistoryServiceImp implements ProductcosthistoryService{
 	}
 
 	@Override
+	@Transactional
 	public void save(Productcosthistory productcosthistory, Integer productId) {
 		
 		Optional<Product> product = productDAO.findById(productId);
@@ -62,6 +64,7 @@ public class ProductcosthistoryServiceImp implements ProductcosthistoryService{
 	}
 	
 	@Override
+	@Transactional
 	public void edit(Productcosthistory productcosthistory, Integer productId) {
 		
 		Optional<Product> product = productDAO.findById(productId);
@@ -117,6 +120,7 @@ public class ProductcosthistoryServiceImp implements ProductcosthistoryService{
 	}
 	
 	@Override
+	@Transactional
 	public void delete(Productcosthistory location) {
 		productcosthistoryDAO.delete(location);
 		

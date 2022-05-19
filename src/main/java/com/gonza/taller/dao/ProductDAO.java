@@ -62,7 +62,7 @@ public class ProductDAO implements Dao<Product>{
 		return query.getResultList();
 	}
 	
-	public List<Product> findAllByUnitMeasureCode(String code) {
+	public List<Product> findAllByUnitMeasureCode(int code) {
 		Query query = entityManager.createQuery("SELECT a FROM Product a WHERE a.unitmeasure1.unitmeasurecode = :code");
 		query.setParameter("code", code);
 		return query.getResultList();
@@ -77,32 +77,40 @@ public class ProductDAO implements Dao<Product>{
 		
 	}
 	
+	
 	public List<Product> findMoreThan2Productcosthistory() {
-		Query query = entityManager.createNativeQuery("SELECT Product.productnumber, Product.name Product.productid COUNT(Productcosthistory.id) AS NumberOfProductCostHistory\n"
-				+ "FROM (Productcosthistory\n"
-				+ "INNER JOIN Product ON Productcosthistory.id = Product.productcosthistories.id)\n"
-				+ "GROUP BY Product.name\n"
-				+ "WHERE COUNT(Productcosthistory.id) > 1;");
+		Query query = entityManager.createQuery("SELECT a "
+				+ "FROM Product a "
+				+ "WHERE SIZE(a.productcosthistories) >= 2");
+		
 		return query.getResultList();
 	}
 	
-//	Query query = entityManager.createQuery("SELECT a.productnumber, a.name , a.productid, COUNT(a.productid) AS NumberOfProductCostHistory "
-//			+ "FROM (Productcosthistory "
-//			+ "INNER JOIN Product a ON Productcosthistory.product.productid = a.productid) "
-//			+ "GROUP BY a.name "
-//			+ "WHERE COUNT(a.productid) > 1;");
-//	
-//	
 	
-//	public List<Product> findByProductSumInventory_orderByLocation(Productsubcategory subcategory) {
-//		String jpql = "SELECT pro" + " FROM producto pro " + "WHERE pro.productinventories  "
-//				+ "IN ( SELECT productinventory pir" + " FROM pro.productinventories  "
-//				+ "WHERE  pir.product.productsubcategory = :subcategory" + "AND pir.quantity>= 1"
-//				+ " ORDER BY pir.location";
+//	public List<Object[]> specialQueryOne(Productsubcategory subcategory) {
+//		String jpql = "SELECT p,COUNT(pi) "
+//				+ "FROM Product p, Productinventory pi "
+//				+ "WHERE pi MEMBER OF p.productinventories "
+//				+ "AND pi.product.productsubcategory = :subcategory "
+//				+ "AND pi.quantity >= 1 "
+//				+ "ORDER BY pi.location";
 //		
-//		return entityManagerProduct.createQuery(jpql).getResultList();
-//
+//		TypedQuery<Object[]> query = entityManager.createQuery(jpql, Object[].class);
+//		return 	query.setParameter("subcategory", subcategory).getResultList();
 //	}
+	
+	public List<Product> specialQueryOne(Productsubcategory subcategory) {
+		Query query = entityManager.createQuery("SELECT p,COUNT(pi) "
+				+ "FROM Product p, Productinventory pi "
+				+ "WHERE pi MEMBER OF p.productinventories "
+				+ "AND pi.product.productsubcategory = :subcategory "
+				+ "AND pi.quantity >= 1 "
+				+ "ORDER BY pi.location");
+		query.setParameter("subcategory", subcategory);
+		return query.getResultList();
+	}
+	
+	
 	
 	
 	

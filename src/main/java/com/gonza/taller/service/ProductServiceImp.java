@@ -79,6 +79,7 @@ public class ProductServiceImp implements ProductService{
 	
 	
 	@Override
+	@Transactional
 	public void edit(Product product, Integer prCategoryId, Integer prSCategoryId) {
 		
 		Optional<Productcategory> productcategory = productCategoryRepository.findById(prCategoryId);
@@ -138,6 +139,7 @@ public class ProductServiceImp implements ProductService{
 		
 	}
 	@Override
+	@Transactional
 	public void edit(Product product, Integer prSCategoryId) {
 		
 		
@@ -209,6 +211,7 @@ public class ProductServiceImp implements ProductService{
 	}
 	
 	@Override
+	@Transactional
 	public void delete(Product product) {
 		productDAO.delete(product);
 		

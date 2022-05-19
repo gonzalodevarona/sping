@@ -52,4 +52,6 @@ public class LocationDAO implements Dao<Location>{
 		
 	}
 	
-}
+	
+	
+} //end of class

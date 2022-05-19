@@ -3,6 +3,7 @@ package com.gonza.taller.service;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.gonza.taller.model.prod.Product;
 import com.gonza.taller.dao.LocationDAO;
@@ -36,6 +37,7 @@ public class ProductinventoryServiceImp implements ProductinventoryService {
 	}
 	
 	@Override
+	@Transactional
 	public void save(Productinventory productInventory, Integer productId, Integer locationId) {
 		
 		Optional<Product> product = productDAO.findById(productId);
@@ -62,6 +64,7 @@ public class ProductinventoryServiceImp implements ProductinventoryService {
 	}
 	
 	@Override	
+	@Transactional
 	public void edit(Productinventory productInventory, Integer productId, Integer locationId) {
 		
 		Optional<Product> product = productDAO.findById(productId);
@@ -98,6 +101,7 @@ public class ProductinventoryServiceImp implements ProductinventoryService {
 	}
 	
 	@Override
+	@Transactional
 	public void delete(Productinventory productinventory) {
 		productinventoryRepository.delete(productinventory);
 		

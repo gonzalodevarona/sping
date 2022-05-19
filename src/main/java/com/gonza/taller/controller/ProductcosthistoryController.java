@@ -90,7 +90,7 @@ public class ProductcosthistoryController implements ProductcosthistoryControlle
 	@Override
 	@PostMapping("/edit/{id}")
 	public String editProductcosthistory(@PathVariable("id") int id, @RequestParam(value = "action", required = true) String action,
-			Productcosthistory productcosthistory, BindingResult bindingResult, Model model) {
+			@Validated @ModelAttribute Productcosthistory productcosthistory, BindingResult bindingResult, Model model) {
 		if (!action.equals("Cancelar")) {
 			
 			if(bindingResult.hasErrors()) {
@@ -98,7 +98,7 @@ public class ProductcosthistoryController implements ProductcosthistoryControlle
 
 				model.addAttribute("products", productService.findAll());
 				
-				return "product/edit";
+				return "productcosthistory/edit";
 				
 			}
 			productcosthistory.setId(id);

@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.gonza.taller.dao.LocationDAO;
 import com.gonza.taller.model.prod.Location;
@@ -28,6 +29,7 @@ public class LocationServiceImp implements LocationService{
 	
 	
 	@Override
+	@Transactional
 	public void save(Location location) {
 		
 		
@@ -44,7 +46,7 @@ public class LocationServiceImp implements LocationService{
 		
 		} else if ((location.getCostrate().compareTo(new BigDecimal("0")) == -1) ||
 				(location.getCostrate().compareTo(new BigDecimal("1")) == 1)) {
-			throw new IllegalArgumentException("Error: Location's availability is not between 1 and 10");
+			throw new IllegalArgumentException("Error: Location's cost rate is not between 0 and 1");
 		
 		}  else {
 			
@@ -58,6 +60,7 @@ public class LocationServiceImp implements LocationService{
 
 
 	@Override
+	@Transactional
 	public void edit(Location location) {
 		
 		if (location == null) {
@@ -110,6 +113,7 @@ public class LocationServiceImp implements LocationService{
 	}
 	
 	@Override
+	@Transactional
 	public void delete(Location location) {
 		locationDAO.delete(location);
 		

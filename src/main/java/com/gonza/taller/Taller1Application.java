@@ -153,7 +153,6 @@ public class Taller1Application {
 			
 			location.setAvailability(new BigDecimal("2"));
 			location.setCostrate(new BigDecimal("0.5"));
-			location.setLocationid(1);
 			location.setName("Ibiza");
 		
 			location.setModifieddate(LocalDate.of(2021, 12, 21));
